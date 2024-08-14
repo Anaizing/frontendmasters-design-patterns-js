@@ -258,3 +258,6 @@ set up modules by declaring modules on the html file `type="modules"`
 
 ```
 
+# #data
+`#data` is a private property
+
