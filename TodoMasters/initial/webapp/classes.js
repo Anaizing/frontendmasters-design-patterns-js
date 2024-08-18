@@ -1,6 +1,6 @@
-import {observerMixin} from './mixins.js';
+import { observerMixin } from './mixins.js';
 
-class TodoItem {
+export class TodoItem {
     constructor(text) {
         this.text = text;
     }
@@ -10,7 +10,7 @@ class TodoItem {
     }
 }
 
-class TodoList { // candidate for a Singleton
+export class TodoList { // candidate for a Singleton
     // Data   
     #data = new Set(); // #data is a private property
     get items() { return this.#data }
