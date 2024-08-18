@@ -28,6 +28,31 @@ class TodoList { // candidate for a Singleton
     static getInstance() {
         return this.instance;
     }
+
+    // List behaviour
+    add(item) {
+        const array = Array.from(this.#data);
+        const todoExists = array.filter(t => t.equals(item)).length > 0 ;
+        if (!todoExists) {
+            this.#data.add(item); 
+            this.notify();
+        }
+    }
+    delete(todo_text) {
+        const array = Array.from(this.#data);
+        // TODO: add null check
+        const todoToDelete = array.filter(t => t.equals(todo_text))[0];
+        this.#data.delete(todoToDelete); 
+        this.notify();
+    } 
+    find(todo_text) {
+        const array = Array.from(this.#data);
+        return array.find(t => t.text == todo_text)
+    }
+    replaceList(list) {
+        this.#data = list;
+        this.notify();
+    }
 }
 // applying the observer mixin to the class
 Object.assign(TodoList.prototype, observerMixin);
