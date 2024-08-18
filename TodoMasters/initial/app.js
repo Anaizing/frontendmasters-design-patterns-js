@@ -5,6 +5,7 @@ globalThis.DOM = {}; //create global access to dom
 const DOM = globalThis.DOM;
 
 function renderList() {
+    DOM.todoList.innerHTML = "";
     const list = TodoList.getInstance();
     for(let todo of list.items) {
         const listItem = document.createElement("li");
@@ -27,11 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     DOM.todoList.addEventListener("click", event => {
         if(event.target.classList.contains("delete-btn")) {
-            const cmd = new Command(Commands.DELETE);
+            const todo = event.target.parentNode.dataset.text;
+            const cmd = new Command(Commands.DELETE, [todo]);
             CommandExecutor.execute(cmd);
         }
     });
 
-    renderList();
+    // renderList();
     TodoList.getInstance().addObserver(renderList);
 })

@@ -40,9 +40,8 @@ export class TodoList { // candidate for a Singleton
     }
     delete(todo_text) {
         const array = Array.from(this.#data);
-        // TODO: add null check
-        const todoToDelete = array.filter(t => t.equals(todo_text))[0];
-        this.#data.delete(todoToDelete); 
+        const todoToDelete = array.filter(t=>t.text==todo_text);
+        this.#data.delete(todoToDelete[0]); 
         this.notify();
     } 
     find(todo_text) {
