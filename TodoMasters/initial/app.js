@@ -1,6 +1,7 @@
 import { CommandExecutor, Commands, Command } from "./webapp/command.js";
 import { LocalStorage } from "./webapp/storage.js";
 import { TodoList } from "./webapp/classes.js";
+import { TodoHistory } from "./webapp/memento.js"
 
 globalThis.DOM = {}; //create global access to dom
 const DOM = globalThis.DOM;
@@ -49,6 +50,11 @@ document.addEventListener("keydown", event => {
     if (event.ctrlKey && event.key === "p") {
         event.preventDefault();
         const cmd = new Command(Commands.ADD);
+        CommandExecutor.execute(cmd);
+    }
+    if (event.ctrlKey && event.key === "z") {
+        console.log(TodoHistory.history);
+        const cmd = new Command(Commands.UNDO);
         CommandExecutor.execute(cmd);
     }
 });
