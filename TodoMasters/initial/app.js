@@ -1,4 +1,5 @@
 import { CommandExecutor, Commands, Command } from "./webapp/command.js";
+import { LocalStorage } from "./webapp/storage.js";
 import { TodoList } from "./webapp/classes.js";
 
 globalThis.DOM = {}; //create global access to dom
@@ -33,7 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
             CommandExecutor.execute(cmd);
         }
     });
+});
 
+document.addEventListener("DOMContentLoaded", () => {
     // renderList();
     TodoList.getInstance().addObserver(renderList);
-})
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    LocalStorage.load()
+});
