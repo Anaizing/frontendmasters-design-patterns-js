@@ -15,9 +15,9 @@ export const TodoHistory = {
     }
 }
 
-const todoItem = TodoList.getInstance();
-todoItem.addObserver(() => {
-    TodoHistory.push(todoItem.items);
+const todoList = TodoList.getInstance();
+todoList.addObserver(() => {
+    TodoHistory.push(todoList.items);
 });
 
 // what a Set is...
