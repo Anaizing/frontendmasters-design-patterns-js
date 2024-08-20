@@ -44,3 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     LocalStorage.load()
 });
+
+document.addEventListener("keydown", event => {
+    if (event.ctrlKey && event.key === "p") {
+        event.preventDefault();
+        const cmd = new Command(Commands.ADD);
+        CommandExecutor.execute(cmd);
+    }
+});
