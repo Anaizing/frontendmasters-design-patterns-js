@@ -1,10 +1,9 @@
-import { TodoItem } from "./classes";
+import { TodoList } from "./classes.js";
 
 export const TodoHistory = {
     history: [],
     push(state) {
         if (state) {
-            // this.history.push(state); //TODO
             this.history.push(new Set([...state]))
         }
     },
@@ -16,7 +15,7 @@ export const TodoHistory = {
     }
 }
 
-const todoItem = TodoItem.getInstance();
+const todoItem = TodoList.getInstance();
 todoItem.addObserver(() => {
     TodoHistory.push(todoItem.items);
 });
