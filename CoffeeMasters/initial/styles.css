@@ -1,5 +1,5 @@
 ::view-transition-old(root), ::view-transition-new(root) {
-    animation-duration: .7s;
+    animation-duration: .4s;
 }
 
 body>header {
@@ -8,6 +8,11 @@ body>header {
 
 ::view-transition-old(main-header), ::view-transition-new(main-header) {
     animation-duration: .1s;
+}
+
+details-page::part(image) {
+    width: 120%;
+    margin-left: -10%;
 }
 
 @keyframes fade-in {
