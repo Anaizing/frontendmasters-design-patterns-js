@@ -110,6 +110,19 @@ you can further customise the transitions via css
 
 ```
 
+you can also independently transition elements by naming the `view-transition-name` and passing that value to the old and new transition
+
+```css
+
+body>header {
+    view-transition-name: main-header;
+}
+
+::view-transition-old(main-header), ::view-transition-new(main-header) {
+    animation-duration: .1s;
+}
+
+```
 ## HTML Templates with Interpolation
 
 problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
