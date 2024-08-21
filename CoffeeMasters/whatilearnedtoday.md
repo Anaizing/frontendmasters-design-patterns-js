@@ -74,6 +74,42 @@ use cases:
 // add view transition logic, via progressive enhancement for browsers that dont support it
 ```
 
+
+you can further customise the transitions via css
+
+```css
+::view-transition-old(root), ::view-transition-new(root) {
+    animation-duration: .7s;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    }
+
+    @keyframes fade-out {
+    to { opacity: 0; }
+    }
+
+    @keyframes slide-from-right {
+    from { transform: translateX(60px); }
+    }
+    
+    @keyframes slide-to-left {
+        to { transform: translateX(-60px); }
+    }
+    
+    ::view-transition-old(root) {
+        animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+    }
+    
+    ::view-transition-new(root) {
+        animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+    }
+
+```
+
 ## HTML Templates with Interpolation
 
 problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
