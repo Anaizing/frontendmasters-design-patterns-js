@@ -46,6 +46,11 @@ const Router = {
                     document.querySelector("main").appendChild(pageElement);
                 }
             }
+            if(document.startViewTransition){
+                document.startViewTransition(() => changePage())
+            } else {
+                changePage();
+            }
         }
 
         window.scrollX = 0;
