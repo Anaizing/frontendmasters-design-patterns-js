@@ -14,7 +14,7 @@ const Router = {
         // Process initial URL   
         Router.go(location.pathname);
     },    
-    go: (route, addToHistory=true) => {
+    go: async (route, addToHistory=true) => {
         if (addToHistory) {
             history.pushState({ route }, '', route);
         }
@@ -24,6 +24,8 @@ const Router = {
                 pageElement = document.createElement("menu-page");
                 break;
             case "/order":
+                // LAZY LOAD PATTERN
+                await import("../components/OrderPage.js");
                 pageElement = document.createElement("order-page");
                 break;
             default:
