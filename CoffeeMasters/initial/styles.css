@@ -6,6 +6,10 @@ body>header {
     view-transition-name: main-header;
 }
 
+::view-transition-old(main-header), ::view-transition-new(main-header) {
+    animation-duration: .1s;
+}
+
 @keyframes fade-in {
     from { opacity: 0; }
     }
