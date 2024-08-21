@@ -36,15 +36,16 @@ const Router = {
                 break;   
         }
         if (pageElement) {
-            // get current page element            
-            let currentPage = document.querySelector("main").firstElementChild; 
-            if (currentPage) {
-                currentPage.remove();
-                document.querySelector("main").appendChild(pageElement);
-            } else {
-                document.querySelector("main").appendChild(pageElement);
+            function changePage() {
+                // get current page element            
+                let currentPage = document.querySelector("main").firstElementChild; 
+                if (currentPage) {
+                    currentPage.remove();
+                    document.querySelector("main").appendChild(pageElement);
+                } else {
+                    document.querySelector("main").appendChild(pageElement);
+                }
             }
-
         }
 
         window.scrollX = 0;
