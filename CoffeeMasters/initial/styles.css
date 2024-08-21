@@ -2,6 +2,10 @@
     animation-duration: .7s;
 }
 
+body>header {
+    view-transition-name: main-header;
+}
+
 @keyframes fade-in {
     from { opacity: 0; }
     }
