@@ -197,6 +197,8 @@ details-page::part(image) {
 ```
 
 ```html
+<!--index.html-->
+...
     <template id="details-page-template">
         <header>   
             <a href="#" onclick="app.router.go('/'); event.preventDefault()">&lt; Back</a>
@@ -209,7 +211,7 @@ details-page::part(image) {
         <p class="price"></p>
         <button>Add to cart</button>
     </template>
-
+...
 
 ```
 
@@ -217,6 +219,48 @@ details-page::part(image) {
 
 problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
 solution: use ES string templates that will let us interpolate with dynamic data from the HTML (hacky)
+
+we are going to use template string syntax to add the variable names
+
+```html
+<!--index.html-->
+...
+    <template id="cart-item-template">
+        <li>
+            <p class='qty'>${quantity}</p>
+            <p class='name'>${name}</p>
+            <p class='price'>${price}</p>
+            <p class='toolbar'>
+                <a href="#" class="delete-button">
+                    🗑️
+                </a>
+            </p>
+        </li>
+    </template>
+...
+```
+
+we create a function called `interpolate()` in the `CartItem.js` file
+
+```js
+// CartItem.js
+...
+        function interpolate(str, params) {
+            let names = Object.keys(params);
+            let values = Object.values(params); 
+            const body = `return \`${str}\`;`;
+            return new Function(...names, body)(...values);
+        }
+
+        this.innerHTML = interpolate(template.innerHTML, {
+            qty: `${item.qty}x`,
+            price: `$${item.product.price.toFixed(2)}`,
+            name: item.product.name
+        })
+...
+        //add varuiable names to html, create a interpolate function and call that function that passes the template.innerHTML and the object with the variable values
+
+```
 
 ## Routing Metadata
 
