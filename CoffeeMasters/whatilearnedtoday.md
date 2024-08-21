@@ -123,6 +123,96 @@ body>header {
 }
 
 ```
+
+## Morphing elements
+
+you cannot duplicate view-transition names, eg each image requires its own name, unique identifier
+here we add a unique identifier to both image locations we are transitioning between
+
+```js
+//ProductItem.js
+
+    connectedCallback() {
+        const template = document.getElementById("product-item-template");
+        const content = template.content.cloneNode(true);
+
+        this.appendChild(content);    
+
+        const product = JSON.parse(this.dataset.product);
+        this.querySelector("h4").textContent = product.name;
+        this.querySelector("p.price").textContent = `$${product.price.toFixed(2)}`;
+        this.querySelector("img").src = `data/images/${product.image}`;
+
+        //HERE WE ADD THIS LINE TARGETING THE img styles
+        this.querySelector("img").style.viewTransitionName = `image-${product.id}`;
+
+        this.querySelector("a").addEventListener("click", event => {
+            console.log(event.target.tagName);
+            if (event.target.tagName.toLowerCase()=="button") {
+                addToCart(product.id); 
+            } else {
+                app.router.go(`/product-${product.id}`);
+            }
+            event.preventDefault();
+        })
+    }
+```
+
+
+```js
+//DetailsPage.js
+...
+    async renderData() {
+        if (this.dataset.productId) {
+            this.product = await getProductById(this.dataset.productId);
+            this.root.querySelector("h2").textContent = this.product.name;
+            this.root.querySelector("img").src = `/data/images/${this.product.image}`;
+
+            //HERE WE ADD THIS LINE TARGETING THE img styles
+            this.root.querySelector("img").style.viewTransitionName = `image-${this.product.id}`;
+
+            this.root.querySelector(".description").textContent = this.product.description;
+            this.root.querySelector(".price").textContent = `$ ${this.product.price.toFixed(2)} ea`
+            this.root.querySelector("button").addEventListener("click", ()=> {
+                addToCart(this.product.id); 
+                app.router.go('/order');
+            })
+        } else {
+            alert("Invalid Product ID");
+        }
+...
+```
+
+
+in the css file target the shadow dom elements via hoking up the `part` pseudo name
+
+```css
+/* styles.css */
+
+details-page::part(image) {
+    width: 120%;
+    margin-left: -10%;
+}
+
+```
+
+```html
+    <template id="details-page-template">
+        <header>   
+            <a href="#" onclick="app.router.go('/'); event.preventDefault()">&lt; Back</a>
+            <h2></h2>
+            <a></a>
+        </header>
+        <!-- here we add the pseudo name `part` -->
+        <img src="" part="image">
+        <p class="description"></p>
+        <p class="price"></p>
+        <button>Add to cart</button>
+    </template>
+
+
+```
+
 ## HTML Templates with Interpolation
 
 problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
