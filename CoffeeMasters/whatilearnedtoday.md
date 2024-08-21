@@ -29,6 +29,51 @@ use cases:
 * animate page change
 * morth elements between pages
 
+>before
+```js
+//Router.js this code replaces the current page from the DOM
+...
+        if (pageElement) {
+            // get current page element            
+            let currentPage = document.querySelector("main").firstElementChild; 
+            if (currentPage) {
+                currentPage.remove();
+                document.querySelector("main").appendChild(pageElement);
+            } else {
+                document.querySelector("main").appendChild(pageElement);
+            }
+
+        }
+...
+
+```
+
+>after
+```js
+//Router.js
+...
+        if (pageElement) {
+            function changePage() {
+                // get current page element            
+                let currentPage = document.querySelector("main").firstElementChild; 
+                if (currentPage) {
+                    currentPage.remove();
+                    document.querySelector("main").appendChild(pageElement);
+                } else {
+                    document.querySelector("main").appendChild(pageElement);
+                }
+            }
+            if(document.startViewTransition){
+                document.startViewTransition(() => changePage())
+            } else {
+                changePage();
+            }
+        }
+...
+
+// add view transition logic, via progressive enhancement for browsers that dont support it
+```
+
 ## HTML Templates with Interpolation
 
 problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
