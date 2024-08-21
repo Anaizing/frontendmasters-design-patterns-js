@@ -1,0 +1,49 @@
+# SPA's design patterns
+
+An SPA is a type of web app that interacts with the user by dynamically rewriting the current web page with new data from the web server, instead of loading entire new pages
+
+## Lazy load
+problem to solve: loading too many js files when the app loads leads to performance and memory usage problems.
+solution: use dynamic imports from ECMASCRIPT to load modules when needed.
+use cases: 
+* load web components when you need them
+* load routes in SPA when you access the page for the first time
+
+```js
+...
+        case "/order":
+            // LAZY LOAD PATTERN
+            await import("../components/OrderPage.js");
+            pageElement = document.createElement("order-page");
+            break;
+...
+//removed web component import on initial load, added dynamic import on Router via lazy load pattern, refactored function to async await for dynamic import
+
+```
+
+## View Transitions
+
+problem to solve: when changing routes there are no transitions as in most apps
+solution: use new View Transitions API
+use cases: 
+* animate page change
+* morth elements between pages
+
+## HTML Templates with Interpolation
+
+problem to solve: when using templates for web components, you cant express in the HTML the bindings you want
+solution: use ES string templates that will let us interpolate with dynamic data from the HTML (hacky)
+
+## Routing Metadata
+
+problem to solve: when working with an SPA, web page metadata, such as title, SEO data and other information stays static no matter the current URL 
+solution: update the metadata dynamically when the route changes
+use cases: 
+* adapt theme-color
+* change the title
+* update the favicon based on the current page
+
+
+<!-- * `document.title` is an old api that can be accessed now in pwa's
+* safari (vomit) allows you to control the color of the browser title bar, chrome holds on to your web app name in case of fishing -->
+
